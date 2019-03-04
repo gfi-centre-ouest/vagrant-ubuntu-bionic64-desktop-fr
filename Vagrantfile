@@ -11,6 +11,10 @@ Vagrant.configure("2") do |config|
       CONFIG_KEYBOARD_VARIANT: 'latin9',
       CONFIG_TIMEZONE: 'Europe/Paris'
   }
+
+  config.vm.provider 'virtualbox' do |v|
+    v.customize [ "modifyvm", :id, "--uartmode1", "disconnected"]
+  end
   
   config.vm.provision 'locale', type: 'shell', privileged: false, path: 'provision/02-locale.sh', env: env
   config.vm.provision 'ubuntu-desktop', type: 'shell', privileged: false, path: 'provision/10-ubuntu-desktop.sh', env: env
