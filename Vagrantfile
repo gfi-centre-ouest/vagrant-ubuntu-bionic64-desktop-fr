@@ -8,7 +8,8 @@ Vagrant.configure("2") do |config|
       CONFIG_LOCALE: 'fr_FR.UTF-8',
       CONFIG_LANGUAGE: 'fr_FR',
       CONFIG_KEYBOARD_LAYOUT: 'fr',
-      CONFIG_KEYBOARD_VARIANT: 'latin9'
+      CONFIG_KEYBOARD_VARIANT: 'latin9',
+      CONFIG_TIMEZONE: 'Europe/Paris'
   }
   
   config.vm.provision 'locale', type: 'shell', privileged: false, path: 'provision/02-locale.sh', env: env

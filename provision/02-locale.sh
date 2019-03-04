@@ -32,3 +32,7 @@ else
   sudo setxkbmap "$CONFIG_KEYBOARD_LAYOUT" "$CONFIG_KEYBOARD_VARIANT"
   sudo sed -i 's/XKBVARIANT=\".*"/XKBVARIANT=\"'"${CONFIG_KEYBOARD_VARIANT}"'\"/g' /etc/default/keyboard
 fi
+
+if [[ -z "$CONFIG_TIMEZONE" ]]; then
+  sudo timedatectl set-timezone "$CONFIG_TIMEZONE"
+fi
