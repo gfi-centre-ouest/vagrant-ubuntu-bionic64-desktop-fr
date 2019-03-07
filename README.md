@@ -8,5 +8,5 @@ Build
 
 ```
 vagrant up --provision
-vagrant package gfi-centre-ouest/ubuntu-bionic64-desktop-fr
+vagrant package
 ```

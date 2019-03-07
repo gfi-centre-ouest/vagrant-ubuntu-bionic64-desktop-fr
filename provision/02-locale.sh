@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 export DEBIAN_FRONTEND=noninteractive
 
 if [[ ! -z "$CONFIG_LOCALE" ]]; then
@@ -33,6 +33,6 @@ else
   sudo sed -i 's/XKBVARIANT=\".*"/XKBVARIANT=\"'"${CONFIG_KEYBOARD_VARIANT}"'\"/g' /etc/default/keyboard
 fi
 
-if [[ -z "$CONFIG_TIMEZONE" ]]; then
+if [[ ! -z "$CONFIG_TIMEZONE" ]]; then
   sudo timedatectl set-timezone "$CONFIG_TIMEZONE"
 fi
