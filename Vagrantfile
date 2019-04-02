@@ -12,6 +12,9 @@ Vagrant.configure("2") do |config|
       CONFIG_TIMEZONE: 'Europe/Paris'
   }
 
+  # Use false to skip ubuntu desktop provisioning
+  desktop = true
+
   # Configure disk size
   if Vagrant.has_plugin?('vagrant-disksize')
     config.disksize.size = '25GB'
@@ -20,14 +23,26 @@ Vagrant.configure("2") do |config|
   config.vm.provider 'virtualbox' do |v|
     v.memory = 2048
     v.cpus = 2
-    v.customize ["modifyvm", :id, "--vram", 32]
+
+    if desktop
+      v.customize ["modifyvm", :id, "--vram", 32]
+    end
+
     v.customize ["modifyvm", :id, "--uartmode1", "disconnected"]
   end
 
   config.vm.provision 'prepare', type: 'shell', privileged: false, path: 'provision/01-prepare.sh', env: env
   config.vm.provision 'locale', type: 'shell', privileged: false, path: 'provision/02-locale.sh', env: env
-  config.vm.provision 'ubuntu-desktop', type: 'shell', privileged: false, path: 'provision/10-ubuntu-desktop.sh', env: env 
+
+  if desktop
+    config.vm.provision 'ubuntu-desktop', type: 'shell', privileged: false, path: 'provision/10-ubuntu-desktop.sh', env: env
+  end
+
   config.vm.provision 'fix-networking', type: 'shell', privileged: false, path: 'provision/11-fix-networking.sh', env: env
-  config.vm.provision 'language-support', type: 'shell', privileged: false, path: 'provision/20-language-support.sh', env: env
+
+  if desktop
+    config.vm.provision 'language-support', type: 'shell', privileged: false, path: 'provision/20-language-support.sh', env: env
+  end
+
   config.vm.provision 'cleanup', type: 'shell', privileged: false, path: 'provision/99-cleanup.sh', env: env
 end
